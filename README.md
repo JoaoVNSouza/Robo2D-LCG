@@ -1,3 +1,3 @@
 # Robo2D-LCG
 
-<img src="https://drive.google.com/file/d/1ON-PQ-ZDwRAc4gs30DJSku5H_IB_8e1e/view?usp=sharing" />
+https://user-images.githubusercontent.com/97700447/181859586-0e684e2f-f0cc-4000-9d91-384f5f3ca768.png
