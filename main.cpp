@@ -156,6 +156,8 @@ static void display()
     draw_mao();
     draw_junta3();
 
+    // Teste TESTE.
+
     glFlush(); // Faz os comandos não executados serem executados.
 }
 
@@ -302,7 +304,7 @@ void draw_mao()
     draw_ret();
 <<<<<<< HEAD
     // Teste git.
-=======
+    == == == =
 >>>>>>> ee82b3210a78d3571f1fb7c604076bc3bb731123
 }
 
