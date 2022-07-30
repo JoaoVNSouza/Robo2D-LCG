@@ -300,7 +300,10 @@ void draw_mao()
     glScalef(0.5, 0.4, 0);
     glColor3f(0.5, 0.5, 0); //
     draw_ret();
+<<<<<<< HEAD
     // Teste git.
+=======
+>>>>>>> ee82b3210a78d3571f1fb7c604076bc3bb731123
 }
 
 /*

@@ -42,7 +42,10 @@
 			<Add library="gdi32" />
 			<Add directory="C:/Program Files/CodeBlocks/MinGW/x86_64-w64-mingw32/lib" />
 		</Linker>
+<<<<<<< HEAD
 		<Unit filename="bibliotecarobo.h" />
+=======
+>>>>>>> ee82b3210a78d3571f1fb7c604076bc3bb731123
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
