@@ -55,7 +55,11 @@ void draw_membro3();
 
 void draw_junta3();
 
-void draw_mao();
+void draw_palma();
+
+void draw_dedoDireito();
+
+void draw_dedoEsquerdo();
 
 static void resize(int, int);
 
@@ -153,10 +157,11 @@ static void display()
     draw_membro3();
     draw_junta2();
 
-    draw_mao();
+    draw_palma();
     draw_junta3();
 
-    // Teste TESTE.
+    draw_dedoDireito();
+    draw_dedoEsquerdo();
 
     glFlush(); // Faz os comandos não executados serem executados.
 }
@@ -199,7 +204,7 @@ void draw_circle(int r, int pts)
     }
     glEnd();
 
-    // Desenha sinal de mais no centro do circle.
+    // Desenha sinal "+" no centro do circle.
     glColor3f(1, 1, 0); // Cor amarelo.
     glLineWidth(r / 2); // Tamanho da linha é proporcional ao tamanho do raio.
 
@@ -290,22 +295,44 @@ void draw_junta3()
     draw_circle(5, 360);
 }
 
-void draw_mao()
+void draw_palma()
 {
     glLoadIdentity(); // Limpa a matriz corrente de transformações geométricas.
 
     glTranslatef(65, 0, 0);
     glRotatef(rotaciona, 0, 0, 1);
 
-    glTranslatef(5, -15, 0);
+    glTranslatef(5, -15, 0); // Garante que a rotação será no centro do objeto e entorno da junta3
     glRotatef(90, 0, 0, 1);
     glScalef(0.5, 0.4, 0);
-    glColor3f(0.5, 0.5, 0); //
+    glColor3f(0.5, 0.5, 0.5); // Cinza
     draw_ret();
-<<<<<<< HEAD
-    // Teste git.
-    == == == =
->>>>>>> ee82b3210a78d3571f1fb7c604076bc3bb731123
+}
+
+void draw_dedoDireito()
+{
+    glLoadIdentity(); // Limpa a matriz corrente de transformações geométricas.
+
+    glTranslatef(65, 0, 0);
+    glRotatef(rotaciona, 0, 0, 1);
+
+    glTranslatef(8, -12, 0); // Garante que a rotação entorno da palma.
+    glScalef(0.25, 0.3, 1);
+    glColor3f(0.5, 0, 0.5);
+    draw_ret();
+}
+
+void draw_dedoEsquerdo()
+{
+    glLoadIdentity(); // Limpa a matriz corrente de transformações geométricas.
+
+    glTranslatef(65, 0, 0);
+    glRotatef(rotaciona, 0, 0, 1);
+
+    glTranslatef(8, 12, 0); // Garante que a rotação entorno da palma.
+    glScalef(0.25, 0.3, 1);
+    glColor3f(0.5, 0, 0.5);
+    draw_ret();
 }
 
 /*
