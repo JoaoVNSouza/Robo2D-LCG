@@ -28,7 +28,7 @@
 
 // Variáveis globais
 GLfloat width = 1024, height = 768; // Armazena o tamanho da janela, para eventos de redimensionar a janela.
-GLint rotaciona = 0;
+GLint translada[2] = {0, 0};        // Variável para fazer a translação da base e todos os membros.
 
 // protótipos de funções/procedimentos.
 void inicializa();
@@ -37,7 +37,7 @@ void draw_cartesiane();
 
 void draw_ret();
 
-void draw_circle(int, int);
+void draw_circle(int, float);
 
 void draw_base();
 
@@ -122,7 +122,7 @@ static void resize(int w, int h)
     glMatrixMode(GL_PROJECTION);     // Inicializa os valores de visualização.
     glLoadIdentity();                // Faz com que a matriz corrente seja inicializada com a matriz identidade.
 
-    // Se ocorrer de altura ser 0, altera para pelo menos 1.
+    // Se ocorrer de altura ser 0, altera é pelo menos 1.
     if (height == 0)
         height = 1;
 
@@ -135,7 +135,7 @@ static void resize(int w, int h)
 
 /*
  * Procedimento responsável por atualizar o display da janela.
- * Mostra todos os desenhos.
+ *  -> Mostra todos os desenhos.
  */
 static void display()
 {
@@ -167,7 +167,7 @@ static void display()
 }
 
 /*
- * Desnha um retângulo de largura 20 e comprimento 60.
+ * Desenha um retângulo de largura 16 e comprimento 60.
  */
 void draw_ret()
 {
@@ -188,23 +188,23 @@ void draw_ret()
  *  -- pts = são os pontos para formar o círculo. De preferência utilize números pares.
  * Saída: Desenha uma círculo.
  */
-void draw_circle(int r, int pts)
+void draw_circle(int r, float pts)
 {
     int i;
-    float angulo = 0, radiano, aumento = float(360) / float(pts);
+    float graus = 0, radiano, aumento = (360 / pts);
 
-    // Desenha circle.
+    // Desenha círculo.
     glColor3f(0, 0, 1);
     glBegin(GL_POLYGON);
     for (i = 0; i < pts; i++)
     {
-        radiano = angulo * (PI / 180); // Conversão angulo para radiano.
+        radiano = graus * (PI / 180); // Conversão GRAUS para RADIANO.
         glVertex2f(r * cos(radiano), r * sin(radiano));
-        angulo += aumento;
+        graus += aumento;
     }
     glEnd();
 
-    // Desenha sinal "+" no centro do circle.
+    // Desenha sinal "+" no centro do círculo.
     glColor3f(1, 1, 0); // Cor amarelo.
     glLineWidth(r / 2); // Tamanho da linha é proporcional ao tamanho do raio.
 
@@ -220,6 +220,9 @@ void draw_base()
 {
     glLoadIdentity(); // Limpa a matriz corrente de transformações geométricas.
 
+    // Movimentando o objeto.
+    glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
+
     glTranslatef(-90, -80, 0);
     glColor3f(1, 0.46, 0.1); // Cor laranja.
     draw_ret();
@@ -229,6 +232,9 @@ void draw_junta0()
 {
     glLoadIdentity(); // Limpa a matriz corrente de transformações geométricas.
 
+    // Movimentando o objeto.
+    glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
+
     glTranslatef(-60, -72, 0);
     // glRotatef(rotaciona, 0, 0, 1);
     draw_circle(8, 360);
@@ -237,6 +243,9 @@ void draw_junta0()
 void draw_membro1()
 {
     glLoadIdentity(); // Limpa a matriz corrente de transformações geométricas.
+
+    // Movimentando o objeto.
+    glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
 
     glTranslatef(-60, -72, 0);
     // glRotatef(rotaciona, 0, 0, 1);
@@ -250,6 +259,9 @@ void draw_junta1()
 {
     glLoadIdentity(); // Limpa a matriz corrente de transformações geométricas.
 
+    // Movimentando o objeto.
+    glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
+
     glTranslatef(-60, 0, 0);
     // glRotatef(rotaciona, 0, 0, 1);
     draw_circle(8, 360);
@@ -258,6 +270,9 @@ void draw_junta1()
 void draw_membro2()
 {
     glLoadIdentity(); // Limpa a matriz corrente de transformações geométricas.
+
+    // Movimentando o objeto.
+    glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
 
     glTranslatef(-60, 0, 0);
     // glRotatef(rotaciona, 0, 0, 1);
@@ -270,6 +285,9 @@ void draw_junta2()
 {
     glLoadIdentity(); // Limpa a matriz corrente de transformações geométricas.
 
+    // Movimentando o objeto.
+    glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
+
     glTranslatef(6, 0, 0);
     // glRotatef(rotaciona, 0, 0, 1);
     draw_circle(8, 360);
@@ -278,6 +296,9 @@ void draw_junta2()
 void draw_membro3()
 {
     glLoadIdentity(); // Limpa a matriz corrente de transformações geométricas.
+
+    // Movimentando o objeto.
+    glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
 
     glTranslatef(6, 0, 0);
     // glRotatef(rotaciona, 0, 0, 1);
@@ -290,8 +311,11 @@ void draw_junta3()
 {
     glLoadIdentity(); // Limpa a matriz corrente de transformações geométricas.
 
+    // Movimentando o objeto.
+    glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
+
     glTranslatef(65, 0, 0);
-    glRotatef(rotaciona, 0, 0, 1);
+
     draw_circle(5, 360);
 }
 
@@ -299,13 +323,15 @@ void draw_palma()
 {
     glLoadIdentity(); // Limpa a matriz corrente de transformações geométricas.
 
+    // Movimentando o objeto.
+    glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
+
     glTranslatef(65, 0, 0);
-    glRotatef(rotaciona, 0, 0, 1);
 
     glTranslatef(5, -15, 0); // Garante que a rotação será no centro do objeto e entorno da junta3
     glRotatef(90, 0, 0, 1);
     glScalef(0.5, 0.4, 0);
-    glColor3f(0.5, 0.5, 0.5); // Cinza
+    glColor3f(0.5, 0.5, 0.5); // Cor Cinza.
     draw_ret();
 }
 
@@ -313,12 +339,14 @@ void draw_dedoDireito()
 {
     glLoadIdentity(); // Limpa a matriz corrente de transformações geométricas.
 
-    glTranslatef(65, 0, 0);
-    glRotatef(rotaciona, 0, 0, 1);
+    // Movimentando o objeto.
+    glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
 
-    glTranslatef(8, -12, 0); // Garante que a rotação entorno da palma.
+    glTranslatef(65, 0, 0);
+
+    glTranslatef(8, -12, 0); // Garante que a rotação seja entorno da palma.
     glScalef(0.25, 0.3, 1);
-    glColor3f(0.5, 0, 0.5);
+    glColor3f(0.5, 0, 0.5); // Cor Roxo.
     draw_ret();
 }
 
@@ -326,12 +354,14 @@ void draw_dedoEsquerdo()
 {
     glLoadIdentity(); // Limpa a matriz corrente de transformações geométricas.
 
-    glTranslatef(65, 0, 0);
-    glRotatef(rotaciona, 0, 0, 1);
+    // Movimentando o objeto.
+    glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
 
-    glTranslatef(8, 12, 0); // Garante que a rotação entorno da palma.
+    glTranslatef(65, 0, 0);
+
+    glTranslatef(8, 12, 0); // Garante que a rotação seja entorno da palma.
     glScalef(0.25, 0.3, 1);
-    glColor3f(0.5, 0, 0.5);
+    glColor3f(0.5, 0, 0.5); // Cor roxo.
     draw_ret();
 }
 
@@ -374,6 +404,9 @@ void draw_cartesiane()
  * Procedimento responsável por executar instruções caso ocorra o pressionamento
  * de teclas na janela exibida.
  * Entrada: uma tecla digitada.
+ * - "w" e "s" para transaladar no eixo y.
+ * - "a" e "d" para transladar no eixo x.
+ * - "o" para restaurar o desenho as posições originais.
  * Saída: Executa uma instrução.
  */
 static void key(unsigned char letra, int x, int y)
@@ -385,18 +418,28 @@ static void key(unsigned char letra, int x, int y)
     case 'Q':
         exit(0);
         break;
-    case 'j':
-    case 'J':
-        rotaciona += 5;
+    case 'w':
+    case 'W':
+        translada[1] += 5;
         break;
-    case 'l':
-    case 'L':
-        rotaciona -= 5;
+    case 's':
+    case 'S':
+        translada[1] -= 5;
+        break;
+    case 'a':
+    case 'A':
+        translada[0] -= 5;
+        break;
+    case 'd':
+    case 'D':
+        translada[0] += 5;
         break;
     case 'o':
     case 'O':
-        rotaciona = 0;
+        translada[0] = 0;
+        translada[1] = 0;
         break;
     }
+
     glutPostRedisplay(); // Atualiza o display a cada evento do teclado.
 }
