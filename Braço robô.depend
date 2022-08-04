@@ -899,3 +899,26 @@
 
 1526093414 c:\program files\codeblocks\mingw\x86_64-w64-mingw32\include\_mingw_print_pop.h
 
+1659648202 source:d:\user\햞ea de trabalho\programming\git\robo2d-lcg\main.cpp
+	<GL/gl.h>
+	<GL/glut.h>
+	<windows.h>
+	<math.h>
+	"bibliotecaRobo.h"
+
+1659642847 d:\user\햞ea de trabalho\programming\git\robo2d-lcg\funcoes.c
+	<GL/gl.h>
+	<GL/glut.h>
+	<windows.h>
+	<math.h>
+	"bibliotecaRobo.h"
+
+1659648044 d:\user\햞ea de trabalho\programming\git\robo2d-lcg\bibliotecarobo.h
+
+1659646318 source:d:\user\햞ea de trabalho\programming\git\robo2d-lcg\funcoes.c
+	<GL/gl.h>
+	<GL/glut.h>
+	<windows.h>
+	<math.h>
+	"bibliotecaRobo.h"
+

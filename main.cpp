@@ -20,52 +20,7 @@
 #include <GL/glut.h>
 #include <windows.h>
 #include <math.h>
-#include "bibliotecarobo.h"
-
-// Constantes.
-#define win 100    // Variável que armazena o valor de coordenadas para cada orientação da janela (x e y).
-#define PI 3.14159 // Constante PI.
-
-// Variáveis globais
-GLfloat width = 1024, height = 768; // Armazena o tamanho da janela, para eventos de redimensionar a janela.
-GLint translada[2] = {0, 0};        // Variável para fazer a translação da base e todos os membros.
-
-// protótipos de funções/procedimentos.
-void inicializa();
-
-void draw_cartesiane();
-
-void draw_ret();
-
-void draw_circle(int, float);
-
-void draw_base();
-
-void draw_junta0();
-
-void draw_membro1();
-
-void draw_junta1();
-
-void draw_membro2();
-
-void draw_junta2();
-
-void draw_membro3();
-
-void draw_junta3();
-
-void draw_palma();
-
-void draw_dedoDireito();
-
-void draw_dedoEsquerdo();
-
-static void resize(int, int);
-
-static void display();
-
-static void key(unsigned char, int, int);
+#include "bibliotecaRobo.h"
 
 /*
  * Função principal: responsável pela execução do programa do início ao fim.
@@ -102,6 +57,17 @@ int main(int argc, char *argv[])
 void inicializa()
 {
     glClearColor(0, 0, 0, 0); // Seleciona a cor de fundo para limpeza da tela (R, G, B, A).
+
+    /* Inicialização das variáveis globais.*/
+    width = 1024;
+    height = 768;
+    translada[0] = 0;
+    translada[1] = 0;
+    rotaciona = 0;
+
+    SetConsoleTitle(" Braco robo"); // Dar um título para janela de prompt.
+
+    return;
 }
 
 // Funções/Procedimentos das rotinas callback.
@@ -157,9 +123,11 @@ static void display()
     draw_membro3();
     draw_junta2();
 
+    /*Cálcula para saber quanto deve transladar os elementos a seguir*/
+    calcXY();
+
     draw_palma();
     draw_junta3();
-
     draw_dedoDireito();
     draw_dedoEsquerdo();
 
@@ -236,7 +204,7 @@ void draw_junta0()
     glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
 
     glTranslatef(-60, -72, 0);
-    // glRotatef(rotaciona, 0, 0, 1);
+
     draw_circle(8, 360);
 }
 
@@ -248,7 +216,7 @@ void draw_membro1()
     glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
 
     glTranslatef(-60, -72, 0);
-    // glRotatef(rotaciona, 0, 0, 1);
+
     glScalef(1, 1.2, 1); // Um pouco mais comprido.
     glRotatef(90, 0, 0, 1);
     glColor3f(1, 0, 1); // Cor rosa.
@@ -275,8 +243,7 @@ void draw_membro2()
     glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
 
     glTranslatef(-60, 0, 0);
-    // glRotatef(rotaciona, 0, 0, 1);
-    glScalef(1.1, 0.8, 1);
+    glScalef(1.08, 0.8, 1);
     glColor3f(1, 1, 0); // Cor amarelo.
     draw_ret();
 }
@@ -288,8 +255,6 @@ void draw_junta2()
     // Movimentando o objeto.
     glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
 
-    glTranslatef(6, 0, 0);
-    // glRotatef(rotaciona, 0, 0, 1);
     draw_circle(8, 360);
 }
 
@@ -300,11 +265,27 @@ void draw_membro3()
     // Movimentando o objeto.
     glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
 
-    glTranslatef(6, 0, 0);
-    // glRotatef(rotaciona, 0, 0, 1);
+    // glTranslatef(6, 0, 0);
+    glRotatef(45, 0, 0, 1); // Deixa o membro3 inclinado.
     glScalef(1, 0.6, 1);
     glColor3f(0, 1, 1); // Cor verde.
     draw_ret();
+}
+
+/*
+ * Procedimento para calcular o ponto exato para inserir os elementos da mão.
+ * - junta3, palma, dedos.
+ *
+ */
+void calcXY()
+{
+    GLfloat radianoX;
+    GLfloat radianoY;
+
+    radianoX = 45 * (PI / 180); // Conversão GRAUS para RADIANO.
+    radianoY = 45 * (PI / 180); // Conversão GRAUS para RADIANO.
+    X = 60 * sin(radianoX);
+    Y = 60 * sin(radianoY);
 }
 
 void draw_junta3()
@@ -313,9 +294,8 @@ void draw_junta3()
 
     // Movimentando o objeto.
     glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
-
-    glTranslatef(65, 0, 0);
-
+    glTranslatef(X, Y, 0);                       // Translada o objeto para a posição correta.
+    glRotatef(rotaciona, 0, 0, 1);
     draw_circle(5, 360);
 }
 
@@ -326,8 +306,8 @@ void draw_palma()
     // Movimentando o objeto.
     glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
 
-    glTranslatef(65, 0, 0);
-
+    glTranslatef(X, Y, 0);   // Translada o objeto para a posição correta.
+    glRotatef(rotaciona, 0, 0, 1); // Rotaciona os dedos entorno no palma.
     glTranslatef(5, -15, 0); // Garante que a rotação será no centro do objeto e entorno da junta3
     glRotatef(90, 0, 0, 1);
     glScalef(0.5, 0.4, 0);
@@ -342,9 +322,9 @@ void draw_dedoDireito()
     // Movimentando o objeto.
     glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
 
-    glTranslatef(65, 0, 0);
-
-    glTranslatef(8, -12, 0); // Garante que a rotação seja entorno da palma.
+    glTranslatef(X, Y, 0);         // Translada o objeto para a posição correta.
+    glRotatef(rotaciona, 0, 0, 1); // Rotaciona os dedos entorno no palma.
+    glTranslatef(8, -12, 0);       // Garante que a rotação seja entorno da palma.
     glScalef(0.25, 0.3, 1);
     glColor3f(0.5, 0, 0.5); // Cor Roxo.
     draw_ret();
@@ -357,9 +337,9 @@ void draw_dedoEsquerdo()
     // Movimentando o objeto.
     glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
 
-    glTranslatef(65, 0, 0);
-
-    glTranslatef(8, 12, 0); // Garante que a rotação seja entorno da palma.
+    glTranslatef(X, Y, 0);         // Translada o objeto para a posição correta.
+    glRotatef(rotaciona, 0, 0, 1); // Rotaciona os dedos entorno no palma.
+    glTranslatef(8, 12, 0);        // Garante que a rotação seja entorno da palma.
     glScalef(0.25, 0.3, 1);
     glColor3f(0.5, 0, 0.5); // Cor roxo.
     draw_ret();
@@ -406,6 +386,7 @@ void draw_cartesiane()
  * Entrada: uma tecla digitada.
  * - "w" e "s" para transaladar no eixo y.
  * - "a" e "d" para transladar no eixo x.
+ * - "j" e "l" para rotacionar a palma e os dedos.
  * - "o" para restaurar o desenho as posições originais.
  * Saída: Executa uma instrução.
  */
@@ -434,10 +415,19 @@ static void key(unsigned char letra, int x, int y)
     case 'D':
         translada[0] += 5;
         break;
+    case 'j':
+    case 'J':
+        rotaciona += 5;
+        break;
+    case 'l':
+    case 'L':
+        rotaciona -= 5;
+        break;
     case 'o':
     case 'O':
         translada[0] = 0;
         translada[1] = 0;
+        rotaciona = 0;
         break;
     }
 
