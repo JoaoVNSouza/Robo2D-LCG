@@ -31,13 +31,14 @@
  */
 int main(int argc, char *argv[])
 {
+    inicializa();                                // Inicializa variáveis.
     glutInit(&argc, argv);                       // Inicicializa com os argumentos passados no prompt de comando.
     glutInitWindowSize(width, height);           // Define o tamanho da janela em pixels.
     glutInitWindowPosition(250, 10);             // Define a posição do canto superior esquerda da janela.
     glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE); // Descreve as configurações da janela (cores suportadas e suas características).
     glutCreateWindow("Braco robo");              // Cria a janela e inseri um título.
 
-    inicializa(); // Define a cor de fundo.
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Seleciona a cor de fundo para limpeza da tela (R, G, B, A).
 
     /*
      * Rotinas callback:
@@ -66,8 +67,6 @@ void inicializa()
     rotaciona = 0;
 
     SetConsoleTitle(" Braco robo"); // Dar um título para janela de prompt.
-
-    return;
 }
 
 // Funções/Procedimentos das rotinas callback.
@@ -306,9 +305,9 @@ void draw_palma()
     // Movimentando o objeto.
     glTranslatef(translada[0], translada[1], 0); // Faz a translação dos objeto.
 
-    glTranslatef(X, Y, 0);   // Translada o objeto para a posição correta.
+    glTranslatef(X, Y, 0);         // Translada o objeto para a posição correta.
     glRotatef(rotaciona, 0, 0, 1); // Rotaciona os dedos entorno no palma.
-    glTranslatef(5, -15, 0); // Garante que a rotação será no centro do objeto e entorno da junta3
+    glTranslatef(5, -15, 0);       // Garante que a rotação será no centro do objeto e entorno da junta3
     glRotatef(90, 0, 0, 1);
     glScalef(0.5, 0.4, 0);
     glColor3f(0.5, 0.5, 0.5); // Cor Cinza.
